@@ -16,7 +16,7 @@
     "price": 14500,
     "thumbnail": "./zapatillas/Adidas/135r.jpg",
     "stock": 20,
-    "category": "Futbol",
+    "category": "Running",
     "id": 2
   },
   {
@@ -38,5 +38,25 @@
     "category": "Futbol",
     "thumbnail": [],
     "id": 4
+  },
+  {
+    "code": 78,
+    "title": "Botin Adidas ",
+    "description": "Zapatillas Running",
+    "price": 14500,
+    "stock": 20,
+    "category": "Futbol",
+    "thumbnail": [],
+    "id": 5
+  },
+  {
+    "code": 145,
+    "title": "Botin Adidas ",
+    "description": "Zapatillas Running",
+    "price": 14500,
+    "stock": 20,
+    "category": "Futbol",
+    "thumbnail": [],
+    "id": 6
   }
 ]

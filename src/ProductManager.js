@@ -1,14 +1,17 @@
-import { error } from 'console'
+import socketServer from './utils/io.js'
 import fs from 'fs'
-
+const io = socketServer()
 export default class ProductManager {
-    constructor(path) {
+    constructor(path,io) {
         this.path = path
+        this.io=io
     }
+    
     getProducts() {
         return fs.promises.readFile(this.path, 'utf-8')
             .then((stringProducts) => {
                 const products = JSON.parse(stringProducts)
+                
                 return products
             })
             .catch(error => {
@@ -45,6 +48,7 @@ export default class ProductManager {
                 newProduct.thumbnail=[]
                 newProduct.id = products.length + 1
                 products.push(newProduct)
+                io.emit('mensajebackend','hola') 
                 return fs.promises.writeFile(this.path, JSON.stringify(products, null, 2))
             })  
     }
