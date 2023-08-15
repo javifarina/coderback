@@ -1,30 +1,63 @@
-//Desafío N2 BACKEND CODER - Francsico JAvier Fariña
 import express from 'express'
-import productRouter from '../routers/productRouter.js'
-import cartRouter from '../routers/cartRouter.js'
-import viewsRouterFn from '../routers/viewsRouter.js'
-import { engine } from 'express-handlebars';
-import socketServer from './utils/io.js'
+import handlebars from 'express-handlebars'
+import { Server } from 'socket.io'
+import viewsRouter from './router/views.routes.js'
+import ProductRouter from './router/product.routes.js'
+import CartRouter from './router/carts.routes.js'
+import messageModel from './models/chat.model.js'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 
-
-const app  = express()
-//handlebars
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', './views');
-app.use(express.static('./public'));
-//Express
+const app = express()
 app.use(express.json())
-app.use(express.urlencoded({ extended: true}))
-const PORT=8080 || 8089
-const httpServer=app.listen(PORT,()=>{
-    console.log(`Servidor corriento en http://localhost:${PORT}`)
-})
-const io = socketServer(httpServer)
 
-const viewsRouter=viewsRouterFn(io)
-//Rutas
-app.use('/api/',productRouter)
-app.use('/api/',cartRouter)
-app.use('/',viewsRouter)
+const PORT = 8080
+const serverHttp = app.listen(PORT, () =>
+  console.log(`Server is Run http://localhost:${PORT}`)
+)
+const io = new Server(serverHttp)
+
+app.set("socketio", io)
+
+app.use(express.static('./src/public'))
+app.engine("handlebars", handlebars.engine());
+app.set('views', './src/views')
+app.set("view engine", "handlebars")
+
+mongoose.set('strictQuery', false)
+
+try {
+  
+//mongo DB Conection
+await mongoose.connect(process.env.MONGODB_URI)
+
+   console.log('Base de Datos esta Conectada !!')
+
+    app.use("/api/products", ProductRouter)
+    app.use("/api/carts", CartRouter)
+    app.use("/products", viewsRouter)
+    app.use('/',(req,res) => res.render('index',{name:'Francisco Javier Fariña'}))
+    io.on("connection", async socket => {
+    console.log('Nuevo Cliente Conectado !!',socket.id)
+    socket.on("productList", data => {
+    io.emit("updatedProducts", data)
+  })
+
+  let messages = await messageModel.find()
+
+  socket.broadcast.emit("alert");
+  socket.emit("logs", messages);
+  socket.on("message", async (data) => {
+    messages.push(data);
+    await messageModel.create(data)
+    io.emit("logs", messages)
+  })
+  
+})
+
+} catch(err) {
+    console.log(err.message)
+}
+
 

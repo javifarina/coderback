@@ -1,25 +1,3 @@
-<div>
-    <h3>Productos</h3>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>CODE</th>
-            <th>TITLE</th>
-            <th>DESCRIPTION</th>
-            <th>PRICE</th>
-            <th>STOCK</th>
-            <th>CATEGORY</th>
-        </tr>
-        {{#each products}}
-            <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.code}}</td>
-                <td>{{this.title}}</td>
-                <td>{{this.description}}</td>
-                <td>{{this.price}}</td>
-                <td>{{this.stock}}</td>
-                <td>{{this.category}}</td>
-            </tr>
-        {{/each}}
-    </table>
+<h2 class="h2-title">Products</h2>
+  {{> table}}
 </div>

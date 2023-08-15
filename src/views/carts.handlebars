@@ -1,0 +1,29 @@
+
+<h2>Products From cart with id = {{cart._id}}</h2>
+
+      <table class="table-container">
+        <thead class="table-title">
+          <tr>
+            <td class="table-row">Product</td>
+            <td class="table-row">Description</td>
+            <td class="table-row">Price</td>
+            <td class="table-row">Code</td>
+            <td class="table-row">Stock</td>
+            <td class="table-row">Quantity</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each products}}
+          <tr>
+            <td class="table-row">{{this.product.title}}</td>
+            <td class="table-row">{{this.product.description}}</td>
+            <td class="table-row">{{this.product.price}}</td>
+            <td class="table-row">{{this.product.code}}</td>
+            <td class="table-row">{{this.product.stock}}</td>
+            <td class="table-row">{{this.quantity}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+    <script src="/js/cart.js"></script>
