@@ -28,7 +28,7 @@ mongoose.set('strictQuery', false)
 
 try {
   
-//mongo DB Conection
+//mongo DB Conection con dev
 await mongoose.connect(process.env.MONGODB_URI)
 
    console.log('Base de Datos esta Conectada !!')
