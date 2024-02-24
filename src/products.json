@@ -1,0 +1,93 @@
+[
+    {
+      "id": 1,
+      "title": "Camiseta básica",
+      "description": "Camiseta de algodón de manga corta",
+      "price": 15.99,
+      "thumbnail": "https://example.com/camiseta.jpg",
+      "code": "TS001",
+      "stock": 50
+    },
+    {
+      "id": 2,
+      "title": "Pantalones vaqueros",
+      "description": "Pantalones vaqueros ajustados para hombre",
+      "price": 39.99,
+      "thumbnail": "https://example.com/pantalones.jpg",
+      "code": "PN002",
+      "stock": 30
+    },
+    {
+      "id": 3,
+      "title": "Zapatillas deportivas",
+      "description": "Zapatillas deportivas para correr",
+      "price": 59.99,
+      "thumbnail": "https://example.com/zapatillas.jpg",
+      "code": "ZP003",
+      "stock": 20
+    },
+    {
+      "id": 4,
+      "title": "Chaqueta de cuero",
+      "description": "Chaqueta de cuero sintético para mujer",
+      "price": 79.99,
+      "thumbnail": "https://example.com/chaqueta.jpg",
+      "code": "CQ004",
+      "stock": 15
+    },
+    {
+      "id": 5,
+      "title": "Sombrero de paja",
+      "description": "Sombrero de paja para protección solar",
+      "price": 12.99,
+      "thumbnail": "https://example.com/sombrero.jpg",
+      "code": "SH005",
+      "stock": 40
+    },
+    {
+      "id": 6,
+      "title": "Pendientes de plata",
+      "description": "Pendientes de plata con piedras preciosas",
+      "price": 29.99,
+      "thumbnail": "https://example.com/pendientes.jpg",
+      "code": "PD006",
+      "stock": 25
+    },
+    {
+      "id": 7,
+      "title": "Libro de cocina",
+      "description": "Libro de recetas de cocina internacional",
+      "price": 19.99,
+      "thumbnail": "https://example.com/libro.jpg",
+      "code": "LC007",
+      "stock": 10
+    },
+    {
+      "id": 8,
+      "title": "Reloj de pulsera",
+      "description": "Reloj analógico de acero inoxidable",
+      "price": 99.99,
+      "thumbnail": "https://example.com/reloj.jpg",
+      "code": "RL008",
+      "stock": 5
+    },
+    {
+      "id": 9,
+      "title": "Juego de mesa",
+      "description": "Juego de mesa clásico para toda la familia",
+      "price": 24.99,
+      "thumbnail": "https://example.com/juego.jpg",
+      "code": "JM009",
+      "stock": 20
+    },
+    {
+      "id": 10,
+      "title": "Mochila escolar",
+      "description": "Mochila escolar resistente y espaciosa",
+      "price": 29.99,
+      "thumbnail": "https://example.com/mochila.jpg",
+      "code": "MS010",
+      "stock": 15
+    }
+  ]
+  
