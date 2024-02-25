@@ -18,16 +18,16 @@ const fs = require("fs");
   async findProductByID(id, products) {
     const product = products.find((pro) => pro.id === id);
     if (!product) {
-      return { error: " Product Not foud" };
+      throw { error: " Product Not foud" };
     }
     return product;
   }
 
   //busca el producto y  devuelve indice de producto
   async findIndexProduct(id, products) {
-    const productIndex = products.findIndex((pro) => pro.id === id);
+    const productIndex = products.findIndex(pro => pro.id === id);
     if (productIndex === -1) {
-      return { error: " Product Not foud" };
+      throw { error: " Product Not foud" };
     }
     return productIndex;
   }
@@ -178,12 +178,13 @@ const main = async () => {
     stock : 25}
     
 await Manager.updateProduct(2, uDproduct);
-
+*/
 //Borrar produccto ID 3
- await Manager.deleteProduct(3);
+
+ await Manager.deleteProduct(18);
 
 // Listar todos los Productos creados en el archivo
 console.log(await Manager.getProduct());
-*/
+
 };
 //main();
