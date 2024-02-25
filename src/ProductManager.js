@@ -1,11 +1,11 @@
 const fs = require("fs");
-class ProductManager {
-  path = "./producto.json";
+  class ProductManager {
+
   static #ultId = 1;
 
   constructor(path) {
     this.path = path;
-    this.products = [];
+    //this.products = [];
   }
 
   #getAndIcrement(){
@@ -43,12 +43,12 @@ class ProductManager {
       const productFileContent = await fs.promises.readFile(this.path, "utf-8");
       return JSON.parse(productFileContent);
     } catch (error) {
-      return [];
+      return {erro:[]};
     }
   }
 
 //Mostrar Productos
-  async getProduct() {
+ async getProduct() {
     try {
       const products = await this.readProducts();
       return products;
@@ -96,7 +96,7 @@ class ProductManager {
     try {
       const products = await this.readProducts();
       const product = await this.findProductByID(id, products);
-      return console.log({ producById: id, product });
+      return product;
     } catch (error) {
       console.log(error);
     }
@@ -131,13 +131,14 @@ class ProductManager {
   }
 }
 
+module.exports = ProductManager
 //testing
 const main = async () => {
   //crear Instancia ProductManager
-  const Manager = new ProductManager("./productos.json");
+  const Manager = new ProductManager("./products.json");
   // Listar todos los Productos del Archivo
   console.log(await Manager.getProduct());
-
+/*
   // Crear 3 Productos
   await Manager.addProduct(
     "producto prueba 1",
@@ -183,6 +184,6 @@ await Manager.updateProduct(2, uDproduct);
 
 // Listar todos los Productos creados en el archivo
 console.log(await Manager.getProduct());
-
+*/
 };
 //main();
