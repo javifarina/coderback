@@ -1,74 +1,79 @@
 [
 	{
-		"id": 3,
-		"title": "Zapatillas deportivas",
+		"title": "Reloj de Pulsera",
 		"description": "Zapatillas deportivas para correr",
-		"price": 59.99,
-		"thumbnail": "https://example.com/zapatillas.jpg",
-		"code": "ZP003",
-		"stock": 20
+		"price": 3.6,
+		"category": "Zapatillas",
+		"code": "4534532",
+		"stock": 2012,
+		"id": 986,
+		"thumbnail": [],
+		"status": true
 	},
 	{
-		"id": 4,
-		"title": "Chaqueta de cuero",
-		"description": "Chaqueta de cuero sintético para mujer",
-		"price": 79.99,
-		"thumbnail": "https://example.com/chaqueta.jpg",
-		"code": "CQ004",
-		"stock": 15
+		"title": "Bolsa de Viaje Resistente al Agua",
+		"description": "Ideal para viajes cortos o largos",
+		"price": 80,
+		"category": "Equipaje",
+		"code": "7845623",
+		"stock": 350,
+		"id": 543,
+		"thumbnail": [],
+		"status": true
 	},
 	{
-		"id": 5,
-		"title": "Sombrero de paja",
-		"description": "Sombrero de paja para protección solar",
-		"price": 12.99,
-		"thumbnail": "https://example.com/sombrero.jpg",
-		"code": "SH005",
-		"stock": 40
+		"title": "Camisa de Algodón de Manga Larga",
+		"description": "Perfecta para ocasiones formales o informales",
+		"price": 45,
+		"category": "Ropa",
+		"code": "2356432",
+		"stock": 800,
+		"id": 321,
+		"thumbnail": [],
+		"status": true
 	},
 	{
-		"id": 6,
-		"title": "Pendientes de plata",
-		"description": "Pendientes de plata con piedras preciosas",
-		"price": 29.99,
-		"thumbnail": "https://example.com/pendientes.jpg",
-		"code": "PD006",
-		"stock": 25
+		"title": "Teléfono Inteligente de Última Generación",
+		"description": "Pantalla AMOLED de alta resolución y cámara de 108 MP",
+		"price": 1200,
+		"category": "Electrónica",
+		"code": "1234567",
+		"stock": 100,
+		"id": 789,
+		"thumbnail": [],
+		"status": true
 	},
 	{
-		"id": 7,
-		"title": "Libro de cocina",
-		"description": "Libro de recetas de cocina internacional",
-		"price": 19.99,
-		"thumbnail": "https://example.com/libro.jpg",
-		"code": "LC007",
-		"stock": 10
+		"title": "Auriculares Inalámbricos con Cancelación de Ruido",
+		"description": "Sonido envolvente y larga duración de batería",
+		"price": 250,
+		"category": "Electrónica",
+		"code": "8765432",
+		"stock": 500,
+		"id": 654,
+		"thumbnail": [],
+		"status": true
 	},
 	{
-		"id": 8,
-		"title": "Reloj de pulsera",
-		"description": "Reloj analógico de acero inoxidable",
-		"price": 99.99,
-		"thumbnail": "https://example.com/reloj.jpg",
-		"code": "RL008",
-		"stock": 5
+		"title": "Libro de Cocina con Recetas Saludables",
+		"description": "Incluye platos vegetarianos, veganos y sin gluten",
+		"price": 30,
+		"category": "Libros",
+		"code": "3456789",
+		"stock": 300,
+		"id": 432,
+		"thumbnail": [],
+		"status": true
 	},
 	{
-		"id": 9,
-		"title": "Juego de mesa",
-		"description": "Juego de mesa clásico para toda la familia",
-		"price": 24.99,
-		"thumbnail": "https://example.com/juego.jpg",
-		"code": "JM009",
-		"stock": 20
-	},
-	{
-		"id": 10,
-		"title": "Mochila escolar",
-		"description": "Mochila escolar resistente y espaciosa",
-		"price": 29.99,
-		"thumbnail": "https://example.com/mochila.jpg",
-		"code": "MS010",
-		"stock": 15
+		"title": "Mochila de Senderismo Impermeable",
+		"description": "Espaciosa y cómoda para largas travesías",
+		"price": 100,
+		"category": "Equipaje",
+		"code": "5678901",
+		"stock": 400,
+		"id": 210,
+		"thumbnail": [],
+		"status": true
 	}
 ]

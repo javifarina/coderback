@@ -1,36 +1,12 @@
 const fs = require("fs");
   class ProductManager {
 
-  static #ultId = 1;
-
   constructor(path) {
     this.path = path;
-    //this.products = [];
+    
   }
 
-  #getAndIcrement(){
-    const id = ProductManager.#ultId
-    ProductManager.#ultId ++
-    return id
-  }
-
-  //Busca producto y devuelve ID 
-  async findProductByID(id, products) {
-    const product = products.find((pro) => pro.id === id);
-    if (!product) {
-      throw { error: " Product Not foud" };
-    }
-    return product;
-  }
-
-  //busca el producto y  devuelve indice de producto
-  async findIndexProduct(id, products) {
-    const productIndex = products.findIndex(pro => pro.id === id);
-    if (productIndex === -1) {
-      throw { error: " Product Not foud" };
-    }
-    return productIndex;
-  }
+  
 
   //Crear productos en el archivo
   async createProduct(product) {
@@ -47,7 +23,7 @@ const fs = require("fs");
     }
   }
 
-//Mostrar Productos
+//Mostrar Producto
  async getProduct() {
     try {
       const products = await this.readProducts();
@@ -57,77 +33,83 @@ const fs = require("fs");
     }
   }
 
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct(data) {
+
     const product = {
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
+        title:data.title,
+        description: data.description,
+        price: data.price,
+        category:data.category,
+        code:data.code,
+        stock:data.stock
       };
     //validar "code"
-    const products = await this.readProducts();
-    const productCode = products.find((pro) => pro.code === code);
+   
+	const products = await this.readProducts();
+    const productCode = products.find((pro) => pro.code === data.code);
     if (productCode) {
-      console.error({ Error: "EL codigo ya Existe!!" });
-      return;
+     throw new Error(`Ya existe un producto con el código '${data.code}'`)
     }
-    //validar que no ingrese valores en Blanco
     if (
-      title === "" ||
-      description === "" ||
-      (isNaN(price) || price < 0) ||
-      thumbnail === "" ||
-      code === "" ||
-      (isNaN(stock) || price < 0)
+      data.title === "" ||
+      data.description === "" ||
+      (isNaN(data.price) || data.price < 0) ||
+      data.category === "" ||
+      data.code === "" ||
+      (isNaN(data.stock) || data.stock < 0)
     ) {
-      console.error({ Error: "No se Puede ingresar valores en Blanco" });
-      return;
+      throw new  Error(`Todo los datos son requeridos`)
     }
-    //Guardar Producto
 
-    product.id=this.#getAndIcrement()
-    products.push(product);
+	product.id=Number.parseInt(Math.random()*1000)
+    product.thumbnail=[]
+    product.status=true
+	  products.push(product)
     await this.createProduct(products);
   }
 
   async getProductById(id) {
-    try {
       const products = await this.readProducts();
-      const product = await this.findProductByID(id, products);
-      return product;
-    } catch (error) {
-      console.log(error);
-    }
+      const productById = products.find((pro) => pro.id === id);
+      if (!productById ) {
+        throw new Error(`No existe el Producto con ID: '${id}'`)
+      }
+      return productById;
+    
   }
-//
+
   async updateProduct(id, udProduct) {
-    try {
       const products = await this.readProducts();
-      const productIndex = await this.findIndexProduct(id, products);
-      products[productIndex].title = udProduct.title;
-      products[productIndex].description = udProduct.description;
-      products[productIndex].thumbnail = udProduct.thumbnail;
-      products[productIndex].code = udProduct.code;
-      products[productIndex].stock = udProduct.stock;
+      const idx = products.findIndex((pro) => pro.id ===id)
+
+      if (idx === -1) {
+        throw new Error(`No existe el Producto con ID: '${id}'`)
+      }
      
+      products[idx].title = udProduct.title || products[idx].title,
+      products[idx].description = udProduct.description || products[idx].description ;
+      products[idx].category = udProduct.category || products[idx].category;
+      products[idx].price = udProduct.price || products[idx].price;
+      products[idx].code = udProduct.code || products[idx].code ;
+      products[idx].stock = udProduct.stock || products[idx].stock ;
+      products[idx].status=udProduct.status ||  products[idx].status
+      products[idx].thumbnail=udProduct.thumbnail ||  products[idx].thumbnail
      await this.createProduct(products);
-    } catch (error) {
-      console.log(error);
-    }
   }
 //Elimina un preoducto del arcivo
   async deleteProduct(id) {
-    try {
+     
       const products = await this.readProducts();
-      const productIndex = await this.findIndexProduct(id, products);
-      products.splice(productIndex, 1);
+      const idx = products.findIndex((pro) => pro.id ===id)
+
+      if (idx === -1) {
+        throw new Error(`No existe el Producto con ID: '${id}'`)
+      }
+      
+      products.splice(idx, 1);
       await this.createProduct(products);
-      console.log(`Producto iD ${id} eliminado `)
-    } catch (error) {
-      console.log(error);
-    }
+      
+    
   }
 }
 
@@ -138,8 +120,19 @@ const main = async () => {
   const Manager = new ProductManager("./products.json");
   // Listar todos los Productos del Archivo
   console.log(await Manager.getProduct());
+ const newProduct=
+ {
+  "title": "Zapatillas deportivas",
+  "description": "Zapatillas deportivas para correr",
+  "price": 59.99,
+  "category": "Zapatillas ",
+  "code": "4534532",
+  "stock": 2012
+}
+await Manager.addProduct(newProduct)
 /*
   // Crear 3 Productos
+  co
   await Manager.addProduct(
     "producto prueba 1",
     "Este es un Producto prueba 1",
@@ -181,7 +174,7 @@ await Manager.updateProduct(2, uDproduct);
 */
 //Borrar produccto ID 3
 
- await Manager.deleteProduct(18);
+ //await Manager.deleteProduct(18);
 
 // Listar todos los Productos creados en el archivo
 console.log(await Manager.getProduct());
