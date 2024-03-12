@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+
+    <div class="col-md-auto">
+      <h3>{{subTitle}}</h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Title</th>
+          <th scope="col">Descriptions</th>
+          <th scope="col">Category</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody id="productFeed">
+        {{#each products}}
+          <tr >
+            <td>{{this.code}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.price}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+   
+  </div>
+</div>
+ <script src="/socket.io/socket.io.js"></script>
+<script src="/js/main.js"></script>

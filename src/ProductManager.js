@@ -6,8 +6,6 @@ const fs = require("fs");
     
   }
 
-  
-
   //Crear productos en el archivo
   async createProduct(product) {
     await fs.promises.writeFile(this.path, JSON.stringify(product, null, "\t"));
