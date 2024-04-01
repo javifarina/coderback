@@ -2,9 +2,10 @@ const { Router } = require('express')
 
 const router = Router()
 
-const ProductManager =require("../src/ProductManager")
-const manager = new ProductManager("./src/products.json")
-
+// const ProductManager =require("../src/dao/fsManager/ProductManager")
+// const manager = new ProductManager("./src/products.json")
+const ProductManager =require("../src/dao/dbManager/ProductManager")
+const manager = new ProductManager()
 router.get('/home',async (_,res) => {
     try {
         

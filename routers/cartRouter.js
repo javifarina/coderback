@@ -1,11 +1,16 @@
 const { Router } = require("express");
 
-const ProductManager = require("../src/ProductManager");
-const CartManager = require("../src/cartManager");
+// const ProductManager = require("../src/dao/fsManager/ProductManager");
+// const CartManager = require("../src/dao/fsManager/cartManager");
+// const managerPro = new ProductManager("./src/products.json");
+// const managerCart = new CartManager("./src/carts.json");
 
-const managerPro = new ProductManager("./src/products.json");
-const managerCart = new CartManager("./src/carts.json");
+const ProductManager = require("../src/dao/dbManager/ProductManager");
+const CartManager = require("../src/dao/dbManager/cartManager");
+const cartsModel = require("../src/dao/models/carts.model");
 
+const managerPro = new ProductManager();
+const managerCart = new CartManager();
 const router = Router();
 
 router.post("/carts", async (req, res) => {
@@ -14,22 +19,23 @@ router.post("/carts", async (req, res) => {
 });
 
 router.get("/carts/:cid", async (req, res) => {
-  const cid = parseInt(req.params.cid);
+  const cid = req.params.cid
   try {
     const cartById = await managerCart.getCartById(cid);
-    res.send({status:"Success",payload:cartById})
-    
+    res.send({ status: "Success", payload: cartById });
   } catch (error) {
-    return res.status(500).json({ error: 'Error al agregar el producto', message: error.message })
-}
+    return res
+      .status(500)
+      .json({ error: "Error al obtener el carrito", message: error.message });
+  }
 });
 
 router.post("/carts/:cid/products/:pid", async (req, res) => {
-  const cid = parseInt(req.params.cid);
-  const pid = parseInt(req.params.pid);
+  const cid = req.params.cid
+  const pid = req.params.pid
 
   try {
-    const carts = await managerCart.getCarts();
+    const carts = await cartsModel.find();
     const cartById = await managerCart.getCartById(cid);
 
     if (!cartById) {
@@ -52,10 +58,12 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
     }
     const posCart = carts.findIndex((e) => e.id === cid);
     carts[posCart].product = cartById.product;
-    await managerCart.createCart(carts);
+    await cartsModel.create(carts);
     res.send({ status: "Success", carts });
   } catch (error) {
-    return res.status(500).json({ error: 'Error al agregar el producto', message: error.message })
+    return res
+      .status(500)
+      .json({ error: "Error al agregar el producto", message: error.message });
   }
 });
 module.exports = router;
