@@ -44,6 +44,17 @@ router.get('/carga',async (req,res) =>{
    }
 
 })
+router.get('/chat',async (req,res) =>{
+    try {
+     res.render("chat",{
+         title:'Chat de Clientes',
+        
+     })
+    } catch (error) {
+     res.status(400).json(error)
+    }
+ 
+ })
 router.post('/realtimeproducts',async(req,res) =>{
     const data = req.body
     try {

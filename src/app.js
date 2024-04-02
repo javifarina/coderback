@@ -4,6 +4,10 @@ const handlebars = require('express-handlebars')
 const mongoose = require('mongoose')
 const { Server } = require('socket.io')
 
+/**Manager de Chat */
+const ChatManager = require('../src/dao/dbManager/chatManager')
+const chatManager = new ChatManager()
+
 /* Routers*/
 const productRouter = require('../routers/productRouter')
 const cartRouter = require('../routers/cartRouter')
@@ -35,9 +39,49 @@ const main = async () =>{
 const wsServer = new Server(httpServer)
 app.set('ws',wsServer)
 
+
 wsServer.on('connection',(ClientSocket) =>{
     console.log(`Cliente Conectado, ID : ${ClientSocket.id}`)
 })
+wsServer.on('connection',(ClientChat)=>{
+      
+    console.log(`Cliente de chat conectado Id: ${ClientChat.id}`)
+  
+    ClientChat.on('message',(data)=>{
+        const newData ={
+            user:data.username,
+            message:data.text
+        }
+        chatManager.saveMessage(newData)
+        wsServer.emit('message', data)
+    })
+    //notificar mensajes a usuarios nuevos
+     chatManager.getMessage()
+        .then((mensaje)=>{
+          
+            for(let e of mensaje){
+                const data ={
+                    username:e.user,
+                    text:e.message
+                }
+                ClientChat.emit('message',data)
+            }
+        
+        })
+ 
+ 
+       
+        
+        
+          
+    
+
+   //Notificar a las salas usuario nuevo
+   ClientChat.on('user-connected',(username) =>{
+        ClientChat.broadcast.emit('user-joined-chat',username)
+   })
+})
+
 /**
  * Configurar la conexion de BD
  */
