@@ -11,7 +11,7 @@ class ProductManager {
       const products = await productModel.find();
       return products.map(d => d.toObject({ virtuals: true }));
     } catch (error) {
-      throw new Error(`Error al leer Archivo`);
+      throw new Error(`Error al leer Archivo`)
     }
   }
 
