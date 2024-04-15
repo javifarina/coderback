@@ -29,7 +29,10 @@ class cartManager {
             throw new Error(`No existe Carrito ${id}`)
         }
         return cartById
-   
+   //TODO borrar un producto dentro de un card
+ }
+ async deteteProdinCard (){
+
  }
 }
 

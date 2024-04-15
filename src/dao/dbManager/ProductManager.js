@@ -6,12 +6,29 @@ class ProductManager {
    * funcion donde se obtiene todos los  productos
    * desde el archivo
    */
-  async getProduct() {
+  async getProduct(filter) {
     try {
-      const products = await productModel.find();
-      return products.map(d => d.toObject({ virtuals: true }));
+     
+      const { limit, page, category, sort,abalability } = filter
+      const filterLimit = limit ? limit : 5
+      const filterPages = page ? page : 1
+
+      //filtro por Categoria
+      if (category){
+        const products = await productModel.paginate({category},{limit:filterLimit,page:filterPages,lean:true})
+        return products
+      }
+
+      //Filtro de Disponibilidad 
+      if(abalability){
+        const products = await productModel.paginate({stock: { $ne: 0 }},{limit:filterLimit,page:filterPages,lean:true})
+        return products
+      }
+
+        const products = await productModel.paginate({},{limit:filterLimit,page:filterPages,sort: sort ? { price: sort } : undefined, lean: true })
+        return products
     } catch (error) {
-      throw new Error(`Error al leer Archivo`)
+      throw new Error(`Error al leer Producto`)
     }
   }
 

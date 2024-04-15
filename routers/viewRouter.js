@@ -6,10 +6,10 @@ const router = Router()
 // const manager = new ProductManager("./src/products.json")
 const ProductManager =require("../src/dao/dbManager/ProductManager")
 const manager = new ProductManager()
-router.get('/home',async (_,res) => {
+router.get('/home',async (req,res) => {
     try {
-        
-        const products = await manager.getProduct()
+        const products = await manager.getProduct(req.query)
+        //console.log(products)
         res.render('home',{
             title:'Productos ',
             subTitle:'Vista de Productos staticos',
@@ -19,14 +19,19 @@ router.get('/home',async (_,res) => {
              res.status(400).json(error)
        }   
 })
-router.get('/realtimeproducts',async (_,res) =>{
+router.get('/products',async (req,res) =>{
     try {
-        const products = await manager.getProduct()
-    res.render("realtimeproducts",{
+        const products = await manager.getProduct(req.query)
+    res.render("products",{
         title:'products',
-        subTitle:'Real time Products',
-        products
-
+        subTitle:'Products',
+        products,
+        prevPage:products.prevPage,
+        nextPage: products.nextPage,
+        page: products.page,
+        hasPrevPage: products.hasPrevPage,
+        hasNextPage: products.hasNextPage,
+        
     })
     } catch (error) {
         res.status(400).json(error)

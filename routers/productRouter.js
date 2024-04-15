@@ -9,13 +9,8 @@ const manager = new ProductManager()
 
 router.get("/products", async (req,res)=>{
    try {
-    const products = await manager.getProduct()
-    const limit = parseInt(req.query.limit)
-    if (!limit){
-        return res.send({status:"Success",payload:products})
-    }
-    const productLimit = products.splice(0,limit)
-         res.send({status:"Success",payload:productLimit})
+        const products = await manager.getProduct(req.query)
+        res.send({status:"Success",payload:products})
    } catch (error) {
     return res.status(500).json({  message: error.message });
    }

@@ -35,7 +35,13 @@ const main = async () =>{
     const httpServer= app.listen(PORT,() =>{
     console.log(`Server ON http://localhost:${PORT}`)
 })
-/* configuracion Servidor WS */
+/**
+ * Configurar la conexion de BD
+ */
+await mongoose.connect('mongodb+srv://CoderUserfrancisco:LpTzC7ytZ9dDWMNN@cluster0.shjdpcd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
+    dbName:'ecommerce'
+})
+/* configuracion Servidor WS 
 const wsServer = new Server(httpServer)
 app.set('ws',wsServer)
 
@@ -69,24 +75,14 @@ wsServer.on('connection',(ClientChat)=>{
         
         })
  
- 
-       
-        
-        
-          
-    
-
    //Notificar a las salas usuario nuevo
    ClientChat.on('user-connected',(username) =>{
         ClientChat.broadcast.emit('user-joined-chat',username)
    })
 })
+*/
 
-/**
- * Configurar la conexion de BD
- */
-await mongoose.connect('mongodb+srv://CoderUserfrancisco:LpTzC7ytZ9dDWMNN@cluster0.shjdpcd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',{
-    dbName:'ecommerce'
-})
+
+
 }
 main()

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const mongoosePaginate = require('mongoose-paginate-v2')
 const schema = new mongoose.Schema({
     title:{
         type  :String,
@@ -11,11 +11,13 @@ const schema = new mongoose.Schema({
     },
     price:{
         type : Number,
-        require : true
+        require : true,
+        index : true
     },
     category:{
         type: String,
-        require : true
+        require : true,
+        index : true
     },
     code: {
         type: String,
@@ -36,8 +38,9 @@ const schema = new mongoose.Schema({
         default: []
     }
 })
-schema.virtual('id').get(function() {
-    return this._id.toString()
-})
+// schema.virtual('id').get(function() {
+//     return this._id.toString()
+// })
+schema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Products',schema, 'product')
