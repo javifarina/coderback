@@ -66,4 +66,47 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
       .json({ error: "Error al agregar el producto", message: error.message });
   }
 });
+
+router.put("/carts/:cid/products/:pid", async (req, res) => {
+  try {
+    const cid = req.params.cid
+    const pid = req.params.pid
+    const  {qty}  =req.body
+
+    const product = await managerPro.getProductById(pid)
+    if (!product) {
+        res.status(400).json("producto no encontrado")
+        return
+    }
+   const update = await managerCart.updateCartInProduct(cid, pid, qty)
+   return update
+  } catch (error) {
+    return res.status(500).json({  message: error.message });
+  }
+});
+router.put('/carts/:cid', async(req,res) =>{
+  const cid= req.params.cid
+  const data = req.body
+  try {
+  
+    const cartById = await managerCart.getCartById(cid)
+    if (!cartById){
+      throw `El carts con ID: ${cid}. No existe`;
+    }
+    const cart = await managerCart.updatedCart(cid,data)
+    res.send({ status: "Success", cart });
+  } catch (error) {
+    return res.status(500).json({  message: error.message });
+  }
+})
+router.delete('/carts/:cid/products/:pid',async(req,res) =>{
+  const cid = req.params.cid
+  const pid = req.params.pid
+  try {
+    const productDelete = await managerCart.cartsinToDelete(cid,pid)
+    res.send({ status: "Success", payload: productDelete });
+  } catch (error) {
+    return res.status(500).json({  message: error.message });
+  }
+})
 module.exports = router;
