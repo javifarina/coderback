@@ -21,7 +21,7 @@ router.post("/carts", async (req, res) => {
 router.get("/carts/:cid", async (req, res) => {
   const cid = req.params.cid
   try {
-    const cartById = await managerCart.getCartById(cid);
+    const cartById = await managerCart.getCartById(cid)
     res.send({ status: "Success", payload: cartById });
   } catch (error) {
     return res

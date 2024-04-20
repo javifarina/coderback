@@ -1,6 +1,14 @@
 
 const express = require("express")
-const handlebars = require('express-handlebars')
+const expressHandlebars = require('express-handlebars')
+const handlebars = expressHandlebars.create({
+    defaultLayout: "main",
+    handlebars: require("handlebars"),
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true
+    }
+})
+
 const mongoose = require('mongoose')
 const { Server } = require('socket.io')
 
@@ -21,9 +29,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 /* Plantillas Handlebars */
-app.engine('handlebars',handlebars.engine())
+app.engine('handlebars',handlebars.engine)
 app.set('views',`${__dirname}/views`)
 app.set('view engine', 'handlebars')
+
 
 /* Rutas */
 app.use('/api/',productRouter)

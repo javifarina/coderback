@@ -152,24 +152,16 @@ class cartManager {
 
         }
         await cartsModel.findByIdAndUpdate(cid, { $set: { products: [] } })
-        return `Carrito ID ${cid} vaciado`
+        return `Carrito ID ${cid} eliminado`
 
       }
       return `el carrito ${cid} no existe`
     }
 
-
-
     catch (err) {
       console.log('Error al eliminar. error :' + err)
     }
-
-
   }
-
-
-
-
 
 }
 

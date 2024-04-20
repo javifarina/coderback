@@ -4,8 +4,11 @@ const router = Router()
 
 // const ProductManager =require("../src/dao/fsManager/ProductManager")
 // const manager = new ProductManager("./src/products.json")
-const ProductManager =require("../src/dao/dbManager/ProductManager")
+const ProductManager = require("../src/dao/dbManager/ProductManager")
+const CartManageer = require ('../src/dao/dbManager/cartManager')
+
 const manager = new ProductManager()
+const cartManager = new CartManageer()
 router.get('/home',async (req,res) => {
     try {
         const products = await manager.getProduct(req.query)
@@ -32,6 +35,21 @@ router.get('/products',async (req,res) =>{
         hasPrevPage: products.hasPrevPage,
         hasNextPage: products.hasNextPage,
         
+    })
+    } catch (error) {
+        res.status(400).json(error)
+    }
+    
+})
+router.get('/carts/:cid',async (req,res) =>{
+    try {
+        const cart = await cartManager.getCartById(req.params.cid)
+        console.log(cart)
+    res.render("carts",{
+        title:'Cart',
+        subTitle:'Carts',
+        cart
+         
     })
     } catch (error) {
         res.status(400).json(error)
