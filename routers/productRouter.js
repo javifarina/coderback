@@ -29,6 +29,7 @@ router.get("/products/:pid",async (req,res)=>{
 
 router.post('/products',async(req,res) => {
     const data = req.body
+    console.log(data)
     try {
     await manager.addProduct(data)
     return  res.send({status:"Success",payload:data})

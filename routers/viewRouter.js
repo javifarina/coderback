@@ -105,4 +105,37 @@ router.post('/realtimeproducts',async(req,res) =>{
     })
    
 })
+router.get('/profile', (req, res) => {
+    const isLoggedIn = ![null, undefined].includes(req.session.user)
+
+    res.render('profile', {
+        title: 'My profile',
+        subTitle: 'My profile',
+        isNotLoggedIn: !isLoggedIn,
+    })
+})
+
+router.get('/login', (_, res) => {
+    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+    res.render('login', {
+        title: 'Login',
+        subTitle:'login'
+    })
+})
+
+router.get('/register', (_, res) => {
+    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+    res.render('register', {
+        title: 'Register',
+        subTitle:'Register'
+    })
+})
+router.get('/error', (_, res) => {
+    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+    res.render('error', {
+        title: 'Error to access',
+        subTitle:'Error to access',
+    })
+})
+
 module.exports = router

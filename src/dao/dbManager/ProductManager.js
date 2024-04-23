@@ -48,24 +48,22 @@ class ProductManager {
     if (
       title === "" ||
       description === "" ||
-      isNaN(data.price) ||
       price < 0 ||
       category === "" ||
       code === "" ||
-      isNaN(stock) ||
       stock < 0
     ) {
       throw new Error(`Invalid Product Data`);
     }
 
-   
+    
     await productModel.create({
       title,
       description,
-      price:+price,
+      price:parseInt(price),
       category,
       code,
-      stock:+stock,
+      stock:parseInt(stock),
       status:true
     });
   }
