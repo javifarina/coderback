@@ -1,12 +1,15 @@
 const { Router } = require('express')
-
+const {LoggedIn,NotLoggedIn } =require('../src/middlewares/auth.middlewares')
 const router = Router()
 
 // const ProductManager =require("../src/dao/fsManager/ProductManager")
 // const manager = new ProductManager("./src/products.json")
 const ProductManager = require("../src/dao/dbManager/ProductManager")
 const CartManageer = require ('../src/dao/dbManager/cartManager')
+const UserManager = require('../src/dao/dbManager/userManager')
 
+
+const userManager = new UserManager()
 const manager = new ProductManager()
 const cartManager = new CartManageer()
 router.get('/home',async (req,res) => {
@@ -22,8 +25,10 @@ router.get('/home',async (req,res) => {
              res.status(400).json(error)
        }   
 })
-router.get('/products',async (req,res) =>{
+router.get('/products',LoggedIn,async (req,res) =>{
     try {
+        const idSesiion = req.session.user.id
+        const user = await userManager.getUser({_id:idSesiion})
         const products = await manager.getProduct(req.query)
     res.render("products",{
         title:'products',
@@ -34,7 +39,12 @@ router.get('/products',async (req,res) =>{
         page: products.page,
         hasPrevPage: products.hasPrevPage,
         hasNextPage: products.hasNextPage,
-        
+        user:{
+            fisrtName:user.firstName,
+            lastName:user.lastName,
+            email:user.email,
+            age:user.age,
+        }
     })
     } catch (error) {
         res.status(400).json(error)
@@ -105,33 +115,45 @@ router.post('/realtimeproducts',async(req,res) =>{
     })
    
 })
-router.get('/profile', (req, res) => {
-    const isLoggedIn = ![null, undefined].includes(req.session.user)
+router.get('/profile',LoggedIn, async (req, res) => {
+    //const isLoggedIn = ![null, undefined].includes(req.session.user)
+    const idSesiion = req.session.user.id
+    const user = await userManager.getUser({_id:idSesiion})
+    console.log(user)
 
     res.render('profile', {
         title: 'My profile',
         subTitle: 'My profile',
-        isNotLoggedIn: !isLoggedIn,
+        user:{
+            fisrtName:user.firstName,
+            lastName:user.lastName,
+            email:user.email,
+            age:user.age,
+        }
     })
 })
-
-router.get('/login', (_, res) => {
-    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+router.get('/logout',(req,res) =>{
+    req.session.destroy(_ =>{
+        res.redirect('/home')
+    })
+})
+router.get('/login',NotLoggedIn, (_, res) => {
+    
     res.render('login', {
         title: 'Login',
         subTitle:'login'
     })
 })
 
-router.get('/register', (_, res) => {
-    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+router.get('/register',NotLoggedIn, (_, res) => {
+    
     res.render('register', {
         title: 'Register',
         subTitle:'Register'
     })
 })
 router.get('/error', (_, res) => {
-    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+   
     res.render('error', {
         title: 'Error to access',
         subTitle:'Error to access',

@@ -10,18 +10,24 @@ router.post('/login',async (req, res) => {
     try {
     //console.log(req.body)
     const {email, password } = req.body
-    // 1. verificar que el usuario exista en la BD
-    const user = await manager.getUser({email, password})
-    console.log(user.email, user.isAdmin)
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Invalid credentials!' })
+    }
+    const user = await manager.getUser({email})
+    //console.log(user.email, user.isAdmin)
 
     if (!user) {
         return res.status(401).json({ error: 'User not found!' })
     }
-    if (user.password ==! password){
+    if (user.password !== password){
         return res.status(401).json({ error: 'Invalid password!' })
     }
-    req.session.user = { email, _id: user._id.toString(),isAdmin}
-    res.redirect('/profile')
+    req.session.user = { email, id: user._id.toString(),
+        lastName:user.firstName,
+        isAdmin:user.isAdmin
+    }
+    res.redirect('/products')
     } catch (error) {
         return res.status(400).json({error:'error'})
     }
@@ -29,11 +35,16 @@ router.post('/login',async (req, res) => {
 
 router.post('/register',async (req, res) => {
     const data = req.body
+    const {email }= data
     try {
-        console.log(data)
+    const user = await manager.getUser({email})
+    console.log(user)
+    if(user){
+        return res.status(401).json({ error: 'El usuario ya existe' })
+    }
     await manager.addUser(data)
-    req.session.user = { email, _id: user._id.toString(),isAdmin}
-    return res.redirect('/profile')
+    req.session.user = { email, id: user._id.toString() }
+     res.redirect('/products')
     } catch (error) {
         return res.status(500).json({ error: 'Error al agregar el usuario', message: error.message })
     }

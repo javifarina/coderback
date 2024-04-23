@@ -1,15 +1,17 @@
-{{#if isLoggedIn }}
+
 <div class="card text-center">
   <div class="card-header">
     {{subTitle}}
   </div>
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h5 class="card-title">Datos de Perfil de Usuario</h5>
+    <p class="card-text"><strong>Nombre :</strong> {{user.fisrtName}}</p>
+    <p class="card-text"><strong>Apellido :</strong>{{user.fisrtName}}</p>
+    <p class="card-text"><strong>Edad :</strong> {{user.age}}</p>
+    <p class="card-text"><strong>Email :</strong> {{user.email}}</p>
+    <a href="http://localhost:8080/logout" class="btn btn-primary">LogOut</a>
   </div>
   <div class="card-footer text-muted">
     2 days ago
   </div>
 </div>
-{{/if}}

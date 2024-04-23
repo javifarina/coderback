@@ -33,8 +33,7 @@ class UserManager {
                 lastName,
                 age:parseInt(age),
                 email,
-                password
-               
+                password       
               }); 
        
     }
