@@ -18,6 +18,14 @@ module.exports={
         }
 
         next()
+    },
+    isAdmin: (req, res, next ) =>{
+        const isAdmin = req.session.user.isAdmin
+        if (isAdmin === false) {
+            return res.status(401).json({ error: 'the user is not authorized' })
+        }
+        next()
     }
+    
 }
 

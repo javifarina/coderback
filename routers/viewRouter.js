@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const {LoggedIn,NotLoggedIn } =require('../src/middlewares/auth.middlewares')
+const {LoggedIn,NotLoggedIn, isAdmin } =require('../src/middlewares/auth.middlewares')
 const router = Router()
 
 // const ProductManager =require("../src/dao/fsManager/ProductManager")
@@ -66,7 +66,7 @@ router.get('/carts/:cid',async (req,res) =>{
     }
     
 })
-router.get('/carga',async (req,res) =>{
+router.get('/carga',isAdmin, async (req,res) =>{
    try {
     res.render("formulario",{
         title:'Carga de Producto',
