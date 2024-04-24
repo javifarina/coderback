@@ -28,14 +28,14 @@ class UserManager {
               ) {
                 throw new Error(`Invalid User Data`);
               }
-              await userModel.create({
+         const user =     await userModel.create({
                 firstName,
                 lastName,
                 age:parseInt(age),
                 email,
                 password       
               }); 
-       
+       return user
     }
 }
 module.exports = UserManager
