@@ -14,15 +14,15 @@ router.post('/login',async (req, res) => {
     if (!email || !password) {
         return res.status(400).json({ error: 'Invalid credentials!' })
     }
-    const user = await manager.getUser({email})
-    console.log({user:user})
-
-    if (!user) {
-        return res.status(401).json({ error: 'User not found!' })
-    }
-    if (user.password !== password){
-        return res.status(401).json({ error: 'Invalid password!' })
-    }
+    const user = await manager.getUser(email,password)
+     
+    console.log(user)
+    // if (!user) {
+    //     return res.status(401).json({ error: 'User not found!' })
+    // }
+    // if (user.password !== password){
+    //     return res.status(401).json({ error: 'Invalid password!' })
+    // }
     req.session.user = { email, id: user._id.toString(),
         lastName:user.firstName,
         isAdmin:user.isAdmin
