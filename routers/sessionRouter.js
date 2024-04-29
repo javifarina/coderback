@@ -31,4 +31,14 @@ router.get('faillogin', (req,res) =>{
     res.redirect('/error')
 })
 
+router.get('/github', passport.authenticate('github' ,{scope:['user:email']}), async(req, res) => {
+ 
+})
+router.get('/githubcallback', passport.authenticate('github',{failureRedirect:'/login'}), async(req, res) => {
+    req.session.user = {
+        id: req.user._id
+    }
+    res.redirect('/products')
+})
+
 module.exports = router

@@ -15,7 +15,8 @@ const sessionMiddleware = require('./session/mongoStorage')
 
 /**Importar Passport  */
 const passport = require('passport')
-const inicializeStratrgy = require('./config/passport.config')
+//const inicializeStratrgy = require('./config/passport.config')
+const inicializeStratrgy = require('./config/passport-github.config')
 
 const { Server } = require('socket.io')
 
