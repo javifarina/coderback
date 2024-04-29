@@ -2,6 +2,7 @@ const { Router } = require('express')
 const {LoggedIn,NotLoggedIn, isAdmin } =require('../src/middlewares/auth.middlewares')
 const router = Router()
 
+
 // const ProductManager =require("../src/dao/fsManager/ProductManager")
 // const manager = new ProductManager("./src/products.json")
 const ProductManager = require("../src/dao/dbManager/ProductManager")
@@ -118,7 +119,7 @@ router.post('/realtimeproducts',async(req,res) =>{
 router.get('/profile',LoggedIn, async (req, res) => {
     //const isLoggedIn = ![null, undefined].includes(req.session.user)
     const idSesiion = req.session.user.id
-    const user = await userManager.getUser({_id:idSesiion})
+    const user = await userManager.getUserById({_id:idSesiion})
     console.log(user)
 
     res.render('profile', {

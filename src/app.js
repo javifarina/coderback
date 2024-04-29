@@ -13,7 +13,9 @@ const handlebars = expressHandlebars.create({
 const { dbName,URI } = require("./config/dbConfig")
 const sessionMiddleware = require('./session/mongoStorage')
 
-
+/**Importar Passport  */
+const passport = require('passport')
+const inicializeStratrgy = require('./config/passport.config')
 
 const { Server } = require('socket.io')
 
@@ -36,6 +38,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 /** Sesions */
 app.use(sessionMiddleware)
+/**Conecta passport con nuestra Logica */
+inicializeStratrgy()
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 /* Plantillas Handlebars */
 app.engine('handlebars',handlebars.engine)

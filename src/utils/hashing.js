@@ -1,6 +1,7 @@
-const bcrypt = require("bcrypt")
+const bcrypt = require('bcrypt')
 
 module.exports = {
-    //hashear Password
-    hashPassword : value => { bcrypt.hashSync(value, bcrypt.genSaltSync(10))}
+    hashPassword: value => bcrypt.hashSync(value, bcrypt.genSaltSync(10)),
+
+    isValidPassword: (password, hashedPassword) => bcrypt.compareSync(password, hashedPassword)
 }

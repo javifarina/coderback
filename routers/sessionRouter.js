@@ -1,57 +1,34 @@
 
 const UserManager = require ('../src/dao/dbManager/userManager')
+const passport = require('passport')
 const { Router } = require('express')
 const manager = new UserManager()
 
 
 const router = Router()
 
-router.post('/login',async (req, res) => {
-    try {
-    //console.log(req.body)
-    const {email, password } = req.body
-
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Invalid credentials!' })
-    }
-    const user = await manager.getUser(email,password)
-     
-    console.log(user)
-    // if (!user) {
-    //     return res.status(401).json({ error: 'User not found!' })
-    // }
-    // if (user.password !== password){
-    //     return res.status(401).json({ error: 'Invalid password!' })
-    // }
-    req.session.user = { email, id: user._id.toString(),
-        lastName:user.firstName,
-        isAdmin:user.isAdmin
+router.post('/login',passport.authenticate('login', {failureRedirect: '/api/sessions/faillogin' }), async (req, res) => {
+    
+    req.session.user = { email: req.user.email, id: req.user._id.toString(),
+        lastName:req.user.firstName,
+        isAdmin:req.user.isAdmin
     }
     res.redirect('/products')
-    } catch (error) {
-        return res.status(400).json({error:'error'})
-    }
+    
 })
 
-router.post('/register',async (req, res) => {
-  
-    try {
-        const data = req.body
-        const { email } = req.body
-        const userEx = await manager.getUser({email})   
-        if (userEx) {
-            return res.status(401).json({ error: 'User already exist' })
-        }
-        const user = await manager.addUser(data)
-        
-        req.session.user = { email, id: user._id.toString(),
-            lastName:user.firstName,
-            isAdmin:user.isAdmin
-        }
-         res.redirect('/products')
-    } catch (error) {
-        return res.status(400).json({error:'error'})
-    }
+router.post('/register', passport.authenticate('register',{failureRedirect:'/api/sessions/failregister'}) ,async (req, res) => {
+   res.redirect('/products')
+   
+})
+
+router.get('/failregister', (req,res) =>{
+    res.redirect('/error')
+
+})
+
+router.get('faillogin', (req,res) =>{
+    res.redirect('/error')
 })
 
 module.exports = router
