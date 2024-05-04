@@ -18,7 +18,11 @@ router.post('/login',passport.authenticate('login', {failureRedirect: '/api/sess
 })
 
 router.post('/register', passport.authenticate('register',{failureRedirect:'/api/sessions/failregister'}) ,async (req, res) => {
-   res.redirect('/products')
+    req.session.user = { email: req.user.email, id: req.user._id.toString(),
+        lastName:req.user.firstName,
+        isAdmin:req.user.isAdmin
+    }
+    res.redirect('/products')
    
 })
 

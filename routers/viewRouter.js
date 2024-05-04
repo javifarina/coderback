@@ -29,7 +29,9 @@ router.get('/home',async (req,res) => {
 router.get('/products',LoggedIn,async (req,res) =>{
     try {
         const idSesiion = req.session.user.id
+        console.log(idSesiion)
         const user = await userManager.getUserById({_id:idSesiion})
+        console.log(user)
         const products = await manager.getProduct(req.query)
     res.render("products",{
         title:'products',

@@ -8,7 +8,7 @@ const inicializeStratrgy = () =>{
         passReqToCallback: true,
         usernameField: 'email'
     },async (req, username, password, done) =>{
-        const { firstName, lastName, ege, email } = req.body
+        const { firstName, lastName, ege, email, } = req.body
         try {
             const user = await User.findOne({email:username})
             if (user) {
@@ -17,11 +17,11 @@ const inicializeStratrgy = () =>{
             const newUser ={
                 firstName,
                 lastName,
-                ege:+ege,
+                ege:+ege,   
                 email,
                 password:hashingUtils.hashPassword(password)
             }
-            //usuarionuevo
+            //usuario nuevo
             const result = await User.create(newUser)
             return done(null, result)
         } catch (error) {
@@ -44,6 +44,7 @@ passport.use('login', new Strategy({
             return done(null, false)
         }
         // validamos el password
+        console.log(user.password)
         if (!hashingUtils.isValidPassword(password, user.password )){
             return done(null, false)
         }

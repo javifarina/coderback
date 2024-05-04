@@ -15,8 +15,8 @@ const sessionMiddleware = require('./session/mongoStorage')
 
 /**Importar Passport  */
 const passport = require('passport')
-//const inicializeStratrgy = require('./config/passport.config')
-const inicializeStratrgy = require('./config/passport-github.config')
+const inicializeStratrgy = require('./config/passport.config')
+const inicializeStratrgyGit = require('./config/passport-github.config')
 
 const { Server } = require('socket.io')
 
@@ -41,6 +41,7 @@ app.use(express.json())
 app.use(sessionMiddleware)
 /**Conecta passport con nuestra Logica */
 inicializeStratrgy()
+inicializeStratrgyGit()
 app.use(passport.initialize())
 app.use(passport.session())
 
